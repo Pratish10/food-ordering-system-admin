@@ -2,7 +2,8 @@ import { Resend } from 'resend'
 
 import {
   EmailTemplate,
-  PasswordResetEmail
+  PasswordResetEmail,
+  SendTwoFactorMailTemplate
 } from '@/components/auth/EmailTemplate'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
@@ -32,5 +33,17 @@ export const sendPasswordResetEmail = async (
     to: email,
     subject: 'Reset your Password',
     react: PasswordResetEmail({ confirmLink })
+  })
+}
+
+export const sendTwoFactorTokenEmail = async (
+  email: string,
+  token: string
+): Promise<void> => {
+  await resend.emails.send({
+    from: 'onboarding@resend.dev',
+    to: email,
+    subject: 'Your 2FA Code',
+    react: SendTwoFactorMailTemplate({ token })
   })
 }

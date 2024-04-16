@@ -17,6 +17,12 @@ import {
   FormLabel,
   FormMessage
 } from '@/components/ui/form'
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot
+} from '@/components/ui/input-otp'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useState, useTransition } from 'react'
@@ -29,6 +35,7 @@ import Link from 'next/link'
 export const LoginForm = (): JSX.Element => {
   const [error, setError] = useState<string | undefined>('')
   const [success, setSuccess] = useState<string | undefined>('')
+  const [showTwoFactor, setShowTwoFactor] = useState<boolean>(false)
 
   const [isPending, startTransition] = useTransition()
 
@@ -52,10 +59,23 @@ export const LoginForm = (): JSX.Element => {
     setSuccess('')
 
     startTransition(() => {
-      void login(values).then((data) => {
-        setError(data?.error)
-        setSuccess(data?.success)
-      })
+      void login(values)
+        .then((data) => {
+          if (data?.error != null) {
+            form.reset()
+            setError(data?.error)
+          }
+          if (data?.success != null) {
+            form.reset()
+            setError(data?.success)
+          }
+          if (data?.twoFactor === true) {
+            setShowTwoFactor(true)
+          }
+        })
+        .catch(() => {
+          setError('Something Went Wrong!')
+        })
     })
   }
 
@@ -72,50 +92,87 @@ export const LoginForm = (): JSX.Element => {
           <div className="space-y-4">
             <FormError message={error ?? urlError} />
             <FormSuccess message={success} />
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="example@example.com"
-                      type="email"
-                      disabled={isPending}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="******"
-                      type="password"
-                      disabled={isPending}
-                    />
-                  </FormControl>
-                  <Button
-                    className="flex justify-end px-0 font-normal w-full"
-                    variant="link"
-                    size="sm"
-                    asChild
-                  >
-                    <Link href="/auth/reset-password">Forgot Password?</Link>
-                  </Button>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            {showTwoFactor && (
+              <div className="flex items-center justify-center">
+                <FormField
+                  control={form.control}
+                  name="code"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="flex items-center justify-center">
+                        Two Factor Code
+                      </FormLabel>
+                      <FormControl>
+                        <InputOTP maxLength={6} {...field}>
+                          <InputOTPGroup>
+                            <InputOTPSlot index={0} />
+                            <InputOTPSlot index={1} />
+                            <InputOTPSlot index={2} />
+                          </InputOTPGroup>
+                          <InputOTPSeparator />
+                          <InputOTPGroup>
+                            <InputOTPSlot index={3} />
+                            <InputOTPSlot index={4} />
+                            <InputOTPSlot index={5} />
+                          </InputOTPGroup>
+                        </InputOTP>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            )}
+            {!showTwoFactor && (
+              <>
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="example@example.com"
+                          type="email"
+                          disabled={isPending}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Password</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="******"
+                          type="password"
+                          disabled={isPending}
+                        />
+                      </FormControl>
+                      <Button
+                        className="flex justify-end px-0 font-normal w-full"
+                        variant="link"
+                        size="sm"
+                        asChild
+                      >
+                        <Link href="/auth/reset-password">
+                          Forgot Password?
+                        </Link>
+                      </Button>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </>
+            )}
           </div>
           <Button
             type="submit"
@@ -123,7 +180,7 @@ export const LoginForm = (): JSX.Element => {
             className="w-full"
             disabled={isPending}
           >
-            Login
+            {showTwoFactor ? 'Confirm' : 'Login'}
           </Button>
         </form>
       </Form>

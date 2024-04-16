@@ -50,7 +50,7 @@ model User {
 
 model verificationToken {
   id      String   @id @default(cuid())
-  email   String
+  email   String   @unique
   token   String   @unique
   expires DateTime
 
@@ -59,7 +59,7 @@ model verificationToken {
 
 model PasswordResetToken {
   id      String   @id @default(cuid())
-  email   String
+  email   String   @unique
   token   String   @unique
   expires DateTime
 
@@ -68,7 +68,7 @@ model PasswordResetToken {
 
 model TwofactorToken {
   id      String   @id @default(cuid())
-  email   String
+  email   String   @unique
   token   String   @unique
   expires DateTime
 

@@ -16,7 +16,9 @@ export const EmailTemplate = ({
   </div>
 )
 
-export const PasswordResetEmail = ({ confirmLink }: EmailTemplateProps): JSX.Element => (
+export const PasswordResetEmail = ({
+  confirmLink
+}: EmailTemplateProps): JSX.Element => (
   <div>
     <h3>Welcome!</h3>
     <h4>
@@ -28,7 +30,11 @@ export const PasswordResetEmail = ({ confirmLink }: EmailTemplateProps): JSX.Ele
   </div>
 )
 
-export const SendTwoFactorMailTemplate = ({ token }: { token: string }): JSX.Element => (
+export const SendTwoFactorMailTemplate = ({
+  token
+}: {
+  token: string
+}): JSX.Element => (
   <div>
     <h3>Welcome!</h3>
     <h4>
