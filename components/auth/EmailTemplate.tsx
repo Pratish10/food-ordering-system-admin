@@ -37,9 +37,9 @@ export const SendTwoFactorMailTemplate = ({
 }): JSX.Element => (
   <div>
     <h3>Welcome!</h3>
-    <h4>
-      Your 2FA code is {token}. Please don not share this code to anyone else.
-    </h4>
+    <p>
+      Your 2FA code is <strong>{token}</strong>. Please do not share this code to anyone else.
+    </p>
     <p>
       <strong>NOTE : </strong>The token will expire in 5 minutes.
     </p>
