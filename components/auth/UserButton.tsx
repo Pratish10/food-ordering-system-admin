@@ -8,20 +8,25 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 import { useCurrentUser } from '@/hooks/useCurrentUser'
-import { User } from 'lucide-react'
 import { LogOutButton } from './LogOutButton'
 import { useRouter } from 'next/navigation'
 
 export const UserButton = (): JSX.Element => {
   const user = useCurrentUser()
   const router = useRouter()
+
+  const avatarFallBack = (user?.name ?? 'Unknown')
+    .split(' ')
+    .map((word) => word.charAt(0).toUpperCase())
+    .join('')
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <Avatar>
+        <Avatar className='border border-black'>
           <AvatarImage src={user?.image ?? ''} />
           <AvatarFallback>
-            <User />
+            {avatarFallBack}
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
