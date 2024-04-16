@@ -5,9 +5,7 @@ import {
   BellIcon,
   LayoutDashboard,
   CookingPot,
-  ListOrdered,
   Dot,
-  LogOut,
   CircleUser,
   Table
 } from 'lucide-react'
@@ -74,28 +72,9 @@ export const Header = (): JSX.Element => {
                         ]
                       },
                       {
-                        label: 'Orders',
-                        icon: ListOrdered,
-                        isDropdown: true,
-                        dropdown: [
-                          { path: '/orders', label: 'Order List', icon: Dot },
-                          {
-                            path: '/order/history',
-                            label: 'Order History',
-                            icon: Dot
-                          }
-                        ]
-                      },
-                      {
                         path: '/profile',
                         label: 'Profile',
                         icon: CircleUser,
-                        isDropdown: false
-                      },
-                      {
-                        path: '/logout',
-                        label: 'Logout',
-                        icon: LogOut,
                         isDropdown: false
                       }
                     ]}
