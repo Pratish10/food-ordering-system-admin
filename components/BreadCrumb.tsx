@@ -22,7 +22,7 @@ const BreadCrumbs = (): JSX.Element => {
       <Breadcrumb>
         <BreadcrumbList>
           {pathname.startsWith('/') && (
-            <>
+            <React.Fragment>
               <BreadcrumbItem>
                 <BreadcrumbLink
                   onClick={() => { router.push('/') }}
@@ -32,7 +32,7 @@ const BreadCrumbs = (): JSX.Element => {
                 </BreadcrumbLink>
               </BreadcrumbItem>
               {pathname !== '/' && <BreadcrumbSeparator />}
-            </>
+            </React.Fragment>
           )}
           {crumb.map((item, index) => (
             <React.Fragment key={index}>

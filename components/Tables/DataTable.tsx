@@ -1,6 +1,6 @@
 'use client'
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   type ColumnDef,
   type SortingState,
@@ -137,7 +137,7 @@ function DataTable<TData, TValue, TModalContent extends JSX.Element> ({
   })
 
   return (
-    <>
+    <React.Fragment>
       <div className="rounded-md">
         <Table />
       </div>
@@ -275,7 +275,7 @@ function DataTable<TData, TValue, TModalContent extends JSX.Element> ({
           </div>
         )}
       </div>
-    </>
+    </React.Fragment>
   )
 }
 

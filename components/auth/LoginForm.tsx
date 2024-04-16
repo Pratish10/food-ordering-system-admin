@@ -25,7 +25,7 @@ import {
 } from '@/components/ui/input-otp'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { useState, useTransition } from 'react'
+import React, { useState, useTransition } from 'react'
 import { FormError } from '../FormError'
 import { FormSuccess } from '../FormSuccess'
 import { login } from '@/actions/user/login'
@@ -124,7 +124,7 @@ export const LoginForm = (): JSX.Element => {
               </div>
             )}
             {!showTwoFactor && (
-              <>
+              <React.Fragment>
                 <FormField
                   control={form.control}
                   name="email"
@@ -171,7 +171,7 @@ export const LoginForm = (): JSX.Element => {
                     </FormItem>
                   )}
                 />
-              </>
+              </React.Fragment>
             )}
           </div>
           <Button

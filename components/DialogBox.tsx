@@ -14,7 +14,8 @@ interface DialogBoxProps {
   content: React.ReactNode | string
   show: boolean
   onClose: () => void
-  onDelete: () => void
+  onAction: () => void
+  onActionButtonLabel: string
 }
 
 export function DialogBox ({
@@ -22,7 +23,8 @@ export function DialogBox ({
   content,
   show,
   onClose,
-  onDelete
+  onAction,
+  onActionButtonLabel
 }: DialogBoxProps): JSX.Element {
   const [open, setOpen] = React.useState(false)
 
@@ -31,7 +33,7 @@ export function DialogBox ({
   }, [show])
 
   const handleDelete = (): void => {
-    onDelete()
+    onAction()
     setOpen(false)
   }
 
@@ -51,7 +53,7 @@ export function DialogBox ({
             </DrawerClose>
             <DrawerClose asChild onClick={handleDelete}>
               <Button className="mx-2" variant="destructive">
-                Delete
+                {onActionButtonLabel}
               </Button>
             </DrawerClose>
           </div>

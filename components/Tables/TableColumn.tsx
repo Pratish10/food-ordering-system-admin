@@ -11,7 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
-import { useState, useTransition } from 'react'
+import React, { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { type Table } from '@prisma/client'
 import { toast } from 'sonner'
@@ -167,7 +167,7 @@ export const TableColumn: Array<ColumnDef<Table>> = [
       }
 
       return (
-        <>
+        <React.Fragment>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0">
@@ -185,16 +185,17 @@ export const TableColumn: Array<ColumnDef<Table>> = [
           <DialogBox
             header="Delete Menu"
             content={
-              <>
+              <React.Fragment>
                 Are you sure you want to delete{' '}
                 <span className="text-orange-400">{table.tableNumber}</span> ?
-              </>
+              </React.Fragment>
             }
             show={showDialog}
             onClose={closeDialog}
-            onDelete={onDelete}
+            onAction={onDelete}
+            onActionButtonLabel='Delete'
           />
-        </>
+        </React.Fragment>
       )
     }
   }

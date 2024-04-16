@@ -7,10 +7,10 @@ const handleAuth = async (): Promise<{
   userId: string | undefined
 }> => {
   const session = await auth()
-  if (session == null) {
+  if (session?.user == null) {
     throw new Error('Unauthorised')
   }
-  return { userId: session?.user.id }
+  return { userId: session.user.id }
 }
 
 export const ourFileRouter = {

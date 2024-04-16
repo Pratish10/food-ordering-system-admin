@@ -19,18 +19,6 @@ Array<{
 > => {
   try {
     const menus = await db.menu.findMany({
-      select: {
-        id: true,
-        name: true,
-        description: true,
-        type: true,
-        image: true,
-        category: true,
-        amount: true,
-        createdAt: true,
-        updatedAt: true,
-        isFeatured: true
-      },
       orderBy: {
         updatedAt: 'desc'
       }

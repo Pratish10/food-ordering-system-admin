@@ -17,7 +17,7 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from '@/components/ui/tooltip'
-import { useState, useTransition } from 'react'
+import React, { useState, useTransition } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useRouter } from 'next/navigation'
 import { type Menu } from '@prisma/client'
@@ -235,7 +235,7 @@ export const MenuColumn: Array<ColumnDef<Menu>> = [
       }
 
       return (
-        <>
+        <React.Fragment>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0">
@@ -253,16 +253,17 @@ export const MenuColumn: Array<ColumnDef<Menu>> = [
           <DialogBox
             header="Delete Menu"
             content={
-              <>
+              <React.Fragment>
                 Are you sure you want to delete{' '}
                 <span className="text-orange-400">{menu.name}</span> ?
-              </>
+              </React.Fragment>
             }
             show={showDialog}
             onClose={closeDialog}
-            onDelete={onDelete}
+            onAction={onDelete}
+            onActionButtonLabel="Delete"
           />
-        </>
+        </React.Fragment>
       )
     }
   }

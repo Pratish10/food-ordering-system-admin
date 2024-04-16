@@ -107,3 +107,10 @@ export const AddCategorySchema = z.object({
     message: 'UserId is required'
   })
 })
+
+export const ProfileSchema = z.object({
+  name: z.string().min(1, {
+    message: 'Name is required'
+  }),
+  isTwoFactorEnabled: z.boolean().optional()
+})
