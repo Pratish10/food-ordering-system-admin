@@ -1,6 +1,6 @@
 'use client'
 import { type ColumnDef } from '@tanstack/react-table'
-import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
+import { Carrot, Drumstick, ArrowUpDown, MoreHorizontal } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { DialogBox } from '@/components/DialogBox'
@@ -11,14 +11,21 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger
+} from '@/components/ui/tooltip'
 import React, { useState, useTransition } from 'react'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useRouter } from 'next/navigation'
-import { type Table } from '@prisma/client'
+import { type Menu } from '@prisma/client'
+import { deleteMenu } from '@/actions/menu/delete-menu'
 import { toast } from 'sonner'
-import { Badge } from '@/components/ui/badge'
-import { deleteTable } from '@/actions/Tables/delete-table'
+import Link from 'next/link'
 
-export const TableColumn: Array<ColumnDef<Table>> = [
+export const MenuColumn: Array<ColumnDef<Menu>> = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -50,23 +57,24 @@ export const TableColumn: Array<ColumnDef<Table>> = [
     enableHiding: false
   },
   {
-    accessorKey: 'id',
-    header: ({ column }) => {
+    id: 'image',
+    cell: ({ row }) => {
+      const image = row.original.image
+      const Name = row.original.name
+      const initials = Name.split(' ')
+        .map((word) => word.charAt(0).toUpperCase())
+        .join('')
+
       return (
-        <p
-          className="flex cursor-pointer text-orange-500 hover:underline md:text-sm text-xs"
-          onClick={() => {
-            column.toggleSorting(column.getIsSorted() === 'asc')
-          }}
-        >
-          Id
-          <ArrowUpDown className="ml-2 h-5 w-3" />
-        </p>
+        <Avatar>
+          <AvatarImage src={image} />
+          <AvatarFallback>{initials}</AvatarFallback>
+        </Avatar>
       )
     }
   },
   {
-    accessorKey: 'tableNumber',
+    accessorKey: 'Name',
     header: ({ column }) => {
       return (
         <p
@@ -75,43 +83,94 @@ export const TableColumn: Array<ColumnDef<Table>> = [
             column.toggleSorting(column.getIsSorted() === 'asc')
           }}
         >
-          Table Number
-          <ArrowUpDown className="ml-2 h-5 w-3" />
-        </p>
-      )
-    }
-  },
-  {
-    accessorKey: 'tableStatus',
-    header: ({ column }) => {
-      return (
-        <p
-          className="flex cursor-pointer text-orange-500 hover:underline md:text-sm text-xs"
-          onClick={() => {
-            column.toggleSorting(column.getIsSorted() === 'asc')
-          }}
-        >
-          Status
+          Name
           <ArrowUpDown className="ml-2 h-5 w-3" />
         </p>
       )
     },
     cell: ({ row }) => {
-      const tableStatus = row.original.tableStatus
+      const type = row.original.type
+      const Name = row.original.name
+
       return (
-        <Badge
-          variant="outline"
-          className={`rounded-full text-xs ${
-            tableStatus === 'Vacant' ? 'bg-green-400' : 'bg-red-400'
-          }`}
-        >
-          {tableStatus}
-        </Badge>
+        <div className="flex items-center space-x-1">
+          <div className='hover:underline cursor-pointer'>
+            <Link href={`editmenu/${row.original.id}`}>{Name}</Link>
+          </div>
+          <span>
+            {type === 'nonVegeterian'
+              ? (
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Drumstick color="red" size={15} />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Non Vegeterian</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+                )
+              : (
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Carrot color="green" size={15} />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Vegeterian</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+                )}
+          </span>
+        </div>
       )
     }
   },
   {
-    accessorKey: 'tableSize',
+    accessorKey: 'category',
+    header: ({ column }) => {
+      return (
+        <p
+          className="flex cursor-pointer text-orange-500 hover:underline md:text-sm text-xs"
+          onClick={() => {
+            column.toggleSorting(column.getIsSorted() === 'asc')
+          }}
+        >
+          Category
+          <ArrowUpDown className="ml-2 h-5 w-3" />
+        </p>
+      )
+    }
+  },
+  {
+    accessorKey: 'amount',
+    header: ({ column }) => {
+      return (
+        <p
+          className="flex cursor-pointer text-orange-500 hover:underline md:text-sm text-xs"
+          onClick={() => {
+            column.toggleSorting(column.getIsSorted() === 'asc')
+          }}
+        >
+          Amount
+          <ArrowUpDown className="ml-2 h-5 w-3" />
+        </p>
+      )
+    },
+    cell: ({ row }) => {
+      const Amount = parseFloat(row.getValue('amount'))
+      const formatted = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'INR'
+      }).format(Amount)
+
+      return <div>{formatted}</div>
+    }
+  },
+  {
+    accessorKey: 'Last Modified',
     header: ({ column }) => {
       return (
         <p
@@ -120,27 +179,40 @@ export const TableColumn: Array<ColumnDef<Table>> = [
             column.toggleSorting(column.getIsSorted() === 'asc')
           }}
         >
-          Size
+          Last Modified
           <ArrowUpDown className="ml-2 h-5 w-3" />
         </p>
       )
     },
     cell: ({ row }) => {
-      const size = row.original.tableSize
-      return <p>{size} Person</p>
+      const updatedAt: Date | undefined = row.original.updatedAt
+      const formattedDate =
+        updatedAt !== undefined
+          ? new Intl.DateTimeFormat('en-US', {
+            timeZone: 'Asia/Kolkata',
+            hour12: true,
+            year: 'numeric',
+            month: 'short',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit'
+          }).format(new Date(updatedAt))
+          : ''
+
+      return <div className="hidden md:block">{formattedDate}</div>
     }
   },
   {
     id: 'actions',
     cell: ({ row }) => {
-      const table = row.original
+      const menu = row.original
       const [showDialog, setShowDialog] = useState(false)
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const [isPending, startTransition] = useTransition()
       const router = useRouter()
 
       const editHandler = (): void => {
-        router.push(`editTable/${table.id}`)
+        router.push(`editmenu/${menu.id}`)
       }
 
       const deleteHandler = (): void => {
@@ -152,17 +224,16 @@ export const TableColumn: Array<ColumnDef<Table>> = [
       }
 
       const onDelete = (): void => {
-        startTransition(() => {
-          void deleteTable(table.id)
-            .then((data) => {
-              if (data?.success != null) {
-                toast.success(data?.success)
-                closeDialog()
-              }
-              if (data?.error != null) {
-                toast.error(data?.error)
-              }
-            }).catch(() => toast.error('Something Went Wrong!'))
+        startTransition(async () => {
+          void deleteMenu(menu?.id).then((data) => {
+            if (data?.success != null) {
+              toast.success(data?.success)
+              close()
+            }
+            if (data?.error != null) {
+              toast.error(data?.error)
+            }
+          })
         })
       }
 
@@ -187,13 +258,13 @@ export const TableColumn: Array<ColumnDef<Table>> = [
             content={
               <React.Fragment>
                 Are you sure you want to delete{' '}
-                <span className="text-orange-400">{table.tableNumber}</span> ?
+                <span className="text-orange-400">{menu.name}</span> ?
               </React.Fragment>
             }
             show={showDialog}
             onClose={closeDialog}
             onAction={onDelete}
-            onActionButtonLabel='Delete'
+            onActionButtonLabel="Delete"
           />
         </React.Fragment>
       )

@@ -28,3 +28,24 @@ export const deleteTable = async (
     return { error: 'Internal Server Error' }
   }
 }
+
+export const deleteTableMany = async (tablesToDelete: string[]): Promise<{
+  error?: string | undefined
+  success?: string | undefined
+}> => {
+  try {
+    await db.table.deleteMany({
+      where: {
+        id: {
+          in: tablesToDelete
+        }
+      }
+    })
+
+    revalidatePath('/tables')
+    return { success: 'Deleted Successfully!' }
+  } catch (error) {
+    console.error('Error deleting Menu:', error)
+    return { error: 'Internal Server Error' }
+  }
+}

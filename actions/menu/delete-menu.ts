@@ -28,3 +28,24 @@ export const deleteMenu = async (
     return { error: 'Internal Server Error' }
   }
 }
+
+export const deleteMenuMany = async (menusToDelete: string[]): Promise<{
+  error?: string | undefined
+  success?: string | undefined
+}> => {
+  try {
+    await db.menu.deleteMany({
+      where: {
+        id: {
+          in: menusToDelete
+        }
+      }
+    })
+
+    revalidatePath('/menus')
+    return { success: 'Deleted Successfully!' }
+  } catch (error) {
+    console.error('Error deleting Menu:', error)
+    return { error: 'Internal Server Error' }
+  }
+}

@@ -1,5 +1,5 @@
-import DataTable from '@/components/Tables/DataTable'
-import { MenuColumn } from '@/components/Tables/MenuColumn'
+import DataTable from '@/components/DataTables/DataTable'
+import { MenuColumn } from '@/components/DataTables/MenuColumn'
 import { CategoryForm } from '@/components/CategoryForm'
 import React from 'react'
 import { getMenus } from '@/actions/menu/get-Menus'

@@ -2,12 +2,16 @@
   "name": "food-ordering-system-nextjs",
   "version": "0.1.0",
   "private": true,
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint --cache \"**/*.{js,jsx,ts,tsx}\" --ignore-path .eslintignore",
     "lint:fix": "eslint --cache --fix \"**/*.{js,jsx,ts,tsx}\" --ignore-path .eslintignore",
+    "db:seed": "prisma db seed",
     "prepare": "husky"
   },
   "dependencies": {
@@ -72,6 +76,7 @@
     "prettier": "^3.2.5",
     "prisma": "^5.7.1",
     "tailwindcss": "^3.3.0",
+    "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   }
 }

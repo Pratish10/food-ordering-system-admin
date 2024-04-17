@@ -117,6 +117,7 @@ model Table {
   id          String      @id @default(cuid())
   tableNumber String      @unique
   tableStatus TableStatus @default(Vacant)
+  tableQrCode String
   tableSize   String
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt

@@ -30,7 +30,8 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 import { Input } from '@/components/ui/input'
-import { XCircle } from 'lucide-react'
+import { Trash2, XCircle } from 'lucide-react'
+import { DialogBox } from '../DialogBox'
 
 interface DataTableProps<TData, TValue, TModalContent extends JSX.Element> {
   columns: Array<ColumnDef<TData, TValue>>
@@ -114,6 +115,7 @@ function DataTable<TData, TValue, TModalContent extends JSX.Element> ({
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = useState({})
   const [globalFilter, setGlobalFilter] = useState('')
+  const [showDialog, setShowDialog] = useState(false)
 
   const table = useReactTable({
     data,
@@ -136,6 +138,27 @@ function DataTable<TData, TValue, TModalContent extends JSX.Element> ({
     }
   })
 
+  const deleteHandler = (): void => {
+    setShowDialog(true)
+  }
+
+  const closeDialog = (): void => {
+    setShowDialog(false)
+  }
+
+  const onDeleteHandler = (): void => {
+    // TODO: implement deleteMany logic dynamically or create customhook anything is fine
+    const selectedData = getSelectedData()
+    selectedData.map((item: { id: string }) => item.id)
+  }
+
+  const getSelectedData = (): any => {
+    return table
+      .getRowModel()
+      .rows.filter((row) => row.getIsSelected())
+      .map((row) => row.original)
+  }
+
   return (
     <React.Fragment>
       <div className="rounded-md">
@@ -148,14 +171,14 @@ function DataTable<TData, TValue, TModalContent extends JSX.Element> ({
             onChange={(value) => {
               setGlobalFilter(String(value))
             }}
-            className="p-2 font-lg shadow border border-block"
+            className="font-lg shadow border border-block"
           />
         )}
         {columnControl && (
-          <div className=" flex ml-auto space-x-6">
+          <div className=" flex ml-auto space-x-4">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="ml-auto">
+                <Button variant="outline" className="ml-auto" size="sm">
                   Columns
                 </Button>
               </DropdownMenuTrigger>
@@ -182,12 +205,35 @@ function DataTable<TData, TValue, TModalContent extends JSX.Element> ({
             {showModalButton && (
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="orange">{buttonLabel}</Button>
+                  <Button variant="orange" size="sm">
+                    {buttonLabel}
+                  </Button>
                 </DialogTrigger>
-                <DialogContent className="w-full">
-                  {modalContent}
-                </DialogContent>
+                <DialogContent className="w-full">{modalContent}</DialogContent>
               </Dialog>
+            )}
+            {table.getRowModel().rows.some((row) => row.getIsSelected()) && (
+              <React.Fragment>
+                <Button
+                  variant="destructive"
+                  size="icon"
+                  onClick={deleteHandler}
+                >
+                  <Trash2 size={20} />
+                </Button>
+                <DialogBox
+                  header="Delete Menu"
+                  content={
+                    <React.Fragment>
+                      Are you sure you want to delete the Selected Data ?
+                    </React.Fragment>
+                  }
+                  show={showDialog}
+                  onClose={closeDialog}
+                  onAction={onDeleteHandler}
+                  onActionButtonLabel="Delete"
+                />
+              </React.Fragment>
             )}
           </div>
         )}

@@ -7,9 +7,15 @@ const nextConfig = {
         hostname: 'utfs.io',
         pathname: "**",
       },
+      {
+        protocol: "https",
+        hostname: 'quickchart.io',
+        pathname: "**",
+      },
     ],
   },
-  reactStrictMode: false
+  reactStrictMode: false,
+  output: "standalone"
 };
 
 export default nextConfig;

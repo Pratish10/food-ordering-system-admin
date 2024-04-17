@@ -23,6 +23,7 @@ import { addTable } from '@/actions/Tables/add-table'
 import ClipLoader from 'react-spinners/ClipLoader'
 
 import { useCurrentUser } from '@/hooks/useCurrentUser'
+import { TableStatus } from '@prisma/client'
 
 export const TableForm = (): JSX.Element => {
   const [isPending, startTransition] = useTransition()
@@ -33,8 +34,9 @@ export const TableForm = (): JSX.Element => {
     defaultValues: {
       tableNumber: '',
       tableSize: '',
-      tableStatus: 'Vacant',
-      userId: user?.id
+      tableStatus: TableStatus.Vacant,
+      userId: user?.id,
+      tableQrCode: 'https://quickchart.io/qr?text=http://localhost:3000/tables&size=350'
     }
   })
 
@@ -86,8 +88,7 @@ export const TableForm = (): JSX.Element => {
                 <Input placeholder="Table Size" {...field} />
               </FormControl>
               <FormDescription>
-                Number of customers that can be seated at this table. Should be
-                number
+                Number of people that can be seated at this table
               </FormDescription>
               <FormMessage />
             </FormItem>

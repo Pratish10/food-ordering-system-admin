@@ -1,4 +1,4 @@
-import { MenuType } from '@prisma/client'
+import { MenuType, TableStatus } from '@prisma/client'
 import * as z from 'zod'
 
 export const RegisterSchema = z.object({
@@ -42,9 +42,11 @@ export const AddMenuSchema = z.object({
   description: z.string().min(1, {
     message: 'Description is required'
   }),
-  type: z.enum([MenuType.Vegeterian, MenuType.nonVegeterian]).refine((value) => value !== '', {
-    message: 'Type of dish is required'
-  }),
+  type: z
+    .enum([MenuType.Vegeterian, MenuType.nonVegeterian])
+    .refine((value) => value !== '', {
+      message: 'Type of dish is required'
+    }),
   category: z.string().min(1, {
     message: 'Category is required'
   }),
@@ -93,7 +95,8 @@ export const AddTableSchema = z.object({
         message: 'Table Size must be a number'
       }
     ),
-  tableStatus: z.string().min(1),
+  tableStatus: z.enum([TableStatus.Vacant, TableStatus.Occupied]),
+  tableQrCode: z.string().min(1),
   userId: z.string().min(1, {
     message: 'UserId is required'
   })

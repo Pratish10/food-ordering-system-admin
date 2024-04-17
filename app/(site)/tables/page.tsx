@@ -1,5 +1,5 @@
-import DataTable from '@/components/Tables/DataTable'
-import { TableColumn } from '@/components/Tables/TableColumn'
+import DataTable from '@/components/DataTables/DataTable'
+import { TableColumn } from '@/components/DataTables/TableColumn'
 import React from 'react'
 import { getTables } from '@/actions/Tables/get-Tables'
 import { TableForm } from '@/components/TableForm'
