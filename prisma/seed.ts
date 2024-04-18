@@ -3,6 +3,51 @@ import { MenuType, TableStatus } from '@prisma/client'
 
 async function main (): Promise<void> {
   // userId is hardcoded
+  await db.category.createMany({
+    data: [
+      {
+        category: 'Burgers',
+        userId: 'clv3odel70000egmuu45avxsb'
+      },
+      {
+        category: 'Drinks',
+        userId: 'clv3odel70000egmuu45avxsb'
+      },
+      {
+        category: 'Main Course',
+        userId: 'clv3odel70000egmuu45avxsb'
+      },
+      {
+        category: 'Desserts',
+        userId: 'clv3odel70000egmuu45avxsb'
+      },
+      {
+        category: 'Noodles',
+        userId: 'clv3odel70000egmuu45avxsb'
+      },
+      {
+        category: 'Sandwiches',
+        userId: 'clv3odel70000egmuu45avxsb'
+      },
+      {
+        category: 'Salads',
+        userId: 'clv3odel70000egmuu45avxsb'
+      },
+      {
+        category: 'Curries',
+        userId: 'clv3odel70000egmuu45avxsb'
+      },
+      {
+        category: 'Breakfast',
+        userId: 'clv3odel70000egmuu45avxsb'
+      },
+      {
+        category: 'Sushi',
+        userId: 'clv3odel70000egmuu45avxsb'
+      }
+    ]
+  })
+
   await db.menu.createMany({
     data: [
       {

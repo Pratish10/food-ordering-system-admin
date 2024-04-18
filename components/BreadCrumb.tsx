@@ -11,22 +11,24 @@ import {
 } from '@/components/ui/breadcrumb'
 import React from 'react'
 
-const BreadCrumbs = (): JSX.Element => {
+export const BreadCrumbs = (): JSX.Element => {
   const router = useRouter()
   const pathname = usePathname()
 
   const crumb = pathname.split('/').filter(Boolean)
 
   return (
-    <div className="flex items-center text-sm my-1 mb-5">
+    <div className="flex items-center text-sm my-1 mb-5 px-5 pt-5">
       <Breadcrumb>
         <BreadcrumbList>
           {pathname.startsWith('/') && (
             <React.Fragment>
               <BreadcrumbItem>
                 <BreadcrumbLink
-                  onClick={() => { router.push('/') }}
-                  className={pathname === '/' ? 'active' : ''}
+                  onClick={() => {
+                    router.push('/')
+                  }}
+                  className="cursor-pointer"
                 >
                   Home
                 </BreadcrumbLink>
@@ -38,7 +40,10 @@ const BreadCrumbs = (): JSX.Element => {
             <React.Fragment key={index}>
               <BreadcrumbItem>
                 <BreadcrumbLink
-                  onClick={() => { router.push(`/${crumb.slice(0, index + 1).join('/')}`) }}
+                  className="cursor-pointer"
+                  onClick={() => {
+                    router.push(`/${crumb.slice(0, index + 1).join('/')}`)
+                  }}
                 >
                   {item.charAt(0).toUpperCase() + item.slice(1)}
                 </BreadcrumbLink>
@@ -51,5 +56,3 @@ const BreadCrumbs = (): JSX.Element => {
     </div>
   )
 }
-
-export default BreadCrumbs

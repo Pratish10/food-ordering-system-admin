@@ -27,3 +27,21 @@ body,
     text-wrap: balance;
   }
 }
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #fb923c;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+

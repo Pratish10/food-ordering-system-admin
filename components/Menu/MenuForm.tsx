@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-confusing-void-expression */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 'use client'
@@ -5,7 +6,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { type z } from 'zod'
-import { useTransition } from 'react'
+import { useEffect, useState, useTransition } from 'react'
 import { toast } from 'sonner'
 import { AddMenuSchema } from '@/schemas/index'
 import { Button } from '@/components/ui/button'
@@ -27,25 +28,54 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger
+} from '@/components/ui/popover'
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList
+} from '@/components/ui/command'
 import { Textarea } from '@/components/ui/textarea'
 import { Input } from '@/components/ui/input'
-import { type Menu, MenuType } from '@prisma/client'
+import { type Category, type Menu, MenuType } from '@prisma/client'
 import ClipLoader from 'react-spinners/ClipLoader'
 import { FileUpload } from '../FileUpload'
 import { Switch } from '@/components/ui/switch'
 import { useCurrentUser } from '@/hooks/useCurrentUser'
 import { addMenu } from '@/actions/menu/add-menu'
 import { updateMenu } from '@/actions/menu/update-menu'
-
+import { cn } from '@/lib/utils'
+import { Check, ChevronsUpDown } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 interface MenuFormProps {
   type: 'Add' | 'Edit'
   menu?: Menu
+  categories: Category[]
 }
 
-export const MenuForm = ({ type, menu }: MenuFormProps): JSX.Element => {
+export const MenuForm = ({
+  type,
+  menu,
+  categories
+}: MenuFormProps): JSX.Element => {
+  const [category, setCategory] = useState<Array<{ label: string, value: string }>>([])
   const [isPending, startTransition] = useTransition()
-
+  const router = useRouter()
   const user = useCurrentUser()
+
+  useEffect(() => {
+    const modifiedCategory = categories.map((item) => ({
+      label: item.category,
+      value: item.category
+    }))
+    setCategory(modifiedCategory)
+  }, [categories])
 
   const defaultValues =
     type === 'Edit' && menu != null
@@ -84,6 +114,7 @@ export const MenuForm = ({ type, menu }: MenuFormProps): JSX.Element => {
         void addMenu(values).then((data) => {
           if (data?.success) {
             toast.success(data?.success)
+            router.push('/menus')
           }
           if (data?.error) {
             toast.success(data?.error)
@@ -98,6 +129,7 @@ export const MenuForm = ({ type, menu }: MenuFormProps): JSX.Element => {
           void updateMenu(values, menu?.id).then((data) => {
             if (data?.success) {
               toast.success(data?.success)
+              router.push('/menus')
             }
             if (data?.error) {
               toast.success(data?.error)
@@ -171,31 +203,58 @@ export const MenuForm = ({ type, menu }: MenuFormProps): JSX.Element => {
               control={form.control}
               name="category"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Dish Category</FormLabel>
-                  <FormControl>
-                    <Select
-                      onValueChange={field.onChange}
-                      disabled={isPending}
-                      {...field}
-                    >
-                      <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Select a Category" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectLabel>Category</SelectLabel>
-                          <SelectItem value="Lunch">Lunch</SelectItem>
-                          <SelectItem value="Dinner">Dinner</SelectItem>
-                          <SelectItem value="Breakfast">Breakfast</SelectItem>
-                          <SelectItem value="Beverages">Beverages</SelectItem>
-                          <SelectItem value="Chaats">Chaats</SelectItem>
-                          <SelectItem value="Appetizers">Appetizers</SelectItem>
-                          <SelectItem value="Dessert">Dessert</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
+                <FormItem className="flex flex-col">
+                  <FormLabel>Category</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          className={cn(
+                            'w-[200px] justify-between',
+                            !field.value && 'text-muted-foreground'
+                          )}
+                        >
+                          {field.value
+                            ? category.find(
+                              (item) => item.value === field.value
+                            )?.label
+                            : 'Select category'}
+                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[200px] p-0">
+                      <Command>
+                        <CommandInput placeholder="Search category..." />
+                        <CommandList>
+                          <CommandEmpty>No category found.</CommandEmpty>
+                          <CommandGroup>
+                            {category.map((item) => (
+                              <CommandItem
+                                value={item.label}
+                                key={item.value}
+                                onSelect={() => {
+                                  form.setValue('category', item.value)
+                                }}
+                              >
+                                <Check
+                                  className={cn(
+                                    'mr-2 h-4 w-4',
+                                    item.value === field.value
+                                      ? 'opacity-100'
+                                      : 'opacity-0'
+                                  )}
+                                />
+                                {item.label}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
                   <FormMessage />
                 </FormItem>
               )}
