@@ -86,7 +86,7 @@ export const Header = (): JSX.Element => {
         </div>
       )}
 
-      <div className="flex items-center space-x-4">
+      <div className="flex ml-auto items-center space-x-4">
         <Button
           variant="outline"
           className="rounded-full border border-slate-800 p-2"
@@ -95,7 +95,7 @@ export const Header = (): JSX.Element => {
         </Button>
         <div className="flex items-center">
           <UserButton />
-          <div className="flex flex-col justify-center items-start p-2">
+          <div className="hidden md:flex flex-col justify-center items-start p-2">
             <p>{user?.name}</p>
             <p className="text-slate-600 text-xs">{user?.role}</p>
           </div>
