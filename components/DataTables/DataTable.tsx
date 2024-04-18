@@ -1,5 +1,6 @@
-'use client'
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
+'use client'
 import React, { useEffect, useState } from 'react'
 import {
   type ColumnDef,
@@ -32,6 +33,8 @@ import {
 import { Input } from '@/components/ui/input'
 import { Trash2, XCircle } from 'lucide-react'
 import { DialogBox } from '../DialogBox'
+import { useDeleteMany } from '@/hooks/useDeleteMany'
+import { toast } from 'sonner'
 
 interface DataTableProps<TData, TValue, TModalContent extends JSX.Element> {
   columns: Array<ColumnDef<TData, TValue>>
@@ -43,6 +46,7 @@ interface DataTableProps<TData, TValue, TModalContent extends JSX.Element> {
   showModalButton?: boolean
   buttonLabel?: string
   modalContent?: TModalContent
+  deleteFunction?: (dataToDelete: string[]) => Promise<{ error?: string, success?: string }>
 }
 
 function DebouncedInput ({
@@ -108,7 +112,8 @@ function DataTable<TData, TValue, TModalContent extends JSX.Element> ({
   showPagination,
   showModalButton,
   buttonLabel,
-  modalContent
+  modalContent,
+  deleteFunction
 }: DataTableProps<TData, TValue, TModalContent>): JSX.Element {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -116,6 +121,8 @@ function DataTable<TData, TValue, TModalContent extends JSX.Element> ({
   const [rowSelection, setRowSelection] = useState({})
   const [globalFilter, setGlobalFilter] = useState('')
   const [showDialog, setShowDialog] = useState(false)
+  const [selectedData, setSelectedData] = useState([])
+  const [error, success, handleDelete] = useDeleteMany(selectedData, deleteFunction)
 
   const table = useReactTable({
     data,
@@ -138,6 +145,13 @@ function DataTable<TData, TValue, TModalContent extends JSX.Element> ({
     }
   })
 
+  const getSelectedData = (): any => {
+    return table
+      .getRowModel()
+      .rows.filter((row) => row.getIsSelected())
+      .map((row) => row.original)
+  }
+
   const deleteHandler = (): void => {
     setShowDialog(true)
   }
@@ -146,18 +160,20 @@ function DataTable<TData, TValue, TModalContent extends JSX.Element> ({
     setShowDialog(false)
   }
 
-  const onDeleteHandler = (): void => {
-    // TODO: implement deleteMany logic dynamically or create customhook anything is fine
-    const selectedData = getSelectedData()
-    selectedData.map((item: { id: string }) => item.id)
+  const onDeleteHandler = async (): Promise<void> => {
+    await handleDelete()
+    if (error) {
+      toast.error(error)
+    }
+    if (success) {
+      toast.success(success)
+    }
   }
 
-  const getSelectedData = (): any => {
-    return table
-      .getRowModel()
-      .rows.filter((row) => row.getIsSelected())
-      .map((row) => row.original)
-  }
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    setSelectedData(getSelectedData().map((item: { id: any }) => item.id))
+  }, [getSelectedData().length])
 
   return (
     <React.Fragment>
@@ -222,7 +238,7 @@ function DataTable<TData, TValue, TModalContent extends JSX.Element> ({
                   <Trash2 size={20} />
                 </Button>
                 <DialogBox
-                  header="Delete Menu"
+                  header="Delete"
                   content={
                     <React.Fragment>
                       Are you sure you want to delete the Selected Data ?

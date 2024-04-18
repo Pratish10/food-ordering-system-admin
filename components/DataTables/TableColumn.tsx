@@ -17,6 +17,7 @@ import { type Table } from '@prisma/client'
 import { toast } from 'sonner'
 import { Badge } from '@/components/ui/badge'
 import { deleteTable } from '@/actions/Tables/delete-table'
+import Link from 'next/link'
 
 export const TableColumn: Array<ColumnDef<Table>> = [
   {
@@ -78,6 +79,15 @@ export const TableColumn: Array<ColumnDef<Table>> = [
           Table Number
           <ArrowUpDown className="ml-2 h-5 w-3" />
         </p>
+      )
+    },
+    cell: ({ row }) => {
+      const TableNumber = row.original.tableNumber
+
+      return (
+        <div className='hover:underline cursor-pointer'>
+          <Link href={`editTable/${row.original.id}`}>{TableNumber}</Link>
+        </div>
       )
     }
   },

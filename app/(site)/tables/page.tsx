@@ -3,6 +3,7 @@ import { TableColumn } from '@/components/DataTables/TableColumn'
 import React from 'react'
 import { getTables } from '@/actions/Tables/get-Tables'
 import { TableForm } from '@/components/TableForm'
+import { deleteTableMany } from '@/actions/Tables/delete-table'
 
 const TableList = async (): Promise<React.JSX.Element> => {
   const tables = await getTables()
@@ -18,6 +19,7 @@ const TableList = async (): Promise<React.JSX.Element> => {
         showModalButton
         buttonLabel='Add Table'
         modalContent={<TableForm />}
+        deleteFunction={deleteTableMany}
       />
     </div>
   )

@@ -3,6 +3,7 @@ import { MenuColumn } from '@/components/DataTables/MenuColumn'
 import { CategoryForm } from '@/components/CategoryForm'
 import React from 'react'
 import { getMenus } from '@/actions/menu/get-Menus'
+import { deleteMenuMany } from '@/actions/menu/delete-menu'
 
 const MenuList = async (): Promise<React.JSX.Element> => {
   const menus = await getMenus()
@@ -18,6 +19,7 @@ const MenuList = async (): Promise<React.JSX.Element> => {
         showModalButton
         buttonLabel='Add Category'
         modalContent={<CategoryForm />}
+        deleteFunction={deleteMenuMany}
       />
     </div>
   )
