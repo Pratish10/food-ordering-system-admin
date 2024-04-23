@@ -2,12 +2,7 @@
 import { Button } from '@/components/ui/button'
 import {
   AlignLeft,
-  BellIcon,
-  LayoutDashboard,
-  CookingPot,
-  Dot,
-  CircleUser,
-  Table
+  BellIcon
 } from 'lucide-react'
 import { useMediaQuery } from 'usehooks-ts'
 
@@ -23,6 +18,7 @@ import { Nav } from './SideBar/Nav'
 import { useState } from 'react'
 import { UserButton } from './auth/UserButton'
 import { useCurrentUser } from '@/hooks/useCurrentUser'
+import { sideBarLinks } from '@/Data/sideBarLinks'
 
 export const Header = (): JSX.Element => {
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false)
@@ -39,7 +35,7 @@ export const Header = (): JSX.Element => {
             <SheetTrigger>
               <AlignLeft />
             </SheetTrigger>
-            <SheetContent>
+            <SheetContent className='overflow-y-auto overflow-x-hidden h-full'>
               <SheetHeader>
                 <SheetTitle>Logo here</SheetTitle>
                 <SheetDescription>
@@ -49,35 +45,7 @@ export const Header = (): JSX.Element => {
                     setIsCollapsed={setIsCollapsed}
                     expandedDropdowns={expandedDropdowns}
                     setExpandedDropdowns={setExpandedDropdowns}
-                    Links={[
-                      {
-                        path: '/',
-                        label: 'Dashboard',
-                        icon: LayoutDashboard,
-                        isDropdown: false
-                      },
-                      {
-                        path: '/tables',
-                        label: 'Tables',
-                        icon: Table,
-                        isDropdown: false
-                      },
-                      {
-                        label: 'Menu',
-                        icon: CookingPot,
-                        isDropdown: true,
-                        dropdown: [
-                          { path: '/addmenu', label: 'Add Menu', icon: Dot },
-                          { path: '/menus', label: 'Menus List', icon: Dot }
-                        ]
-                      },
-                      {
-                        path: '/profile',
-                        label: 'Profile',
-                        icon: CircleUser,
-                        isDropdown: false
-                      }
-                    ]}
+                    Links={sideBarLinks}
                   />
                 </SheetDescription>
               </SheetHeader>

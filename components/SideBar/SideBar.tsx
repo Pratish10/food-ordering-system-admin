@@ -4,16 +4,12 @@ import React, { useState } from 'react'
 import { useMediaQuery } from 'usehooks-ts'
 import { Button } from '@/components/ui/button'
 import {
-  LayoutDashboard,
-  CookingPot,
-  Dot,
-  CircleUser,
   ChevronRight,
-  ChevronLeft,
-  Table
+  ChevronLeft
 } from 'lucide-react'
 
 import { Nav } from '@/components/SideBar/Nav'
+import { sideBarLinks } from '@/Data/sideBarLinks'
 
 export const SideBar = (): JSX.Element | null => {
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false)
@@ -27,7 +23,7 @@ export const SideBar = (): JSX.Element | null => {
   return (
     <div
       className={`relative ${
-        isCollapsed ? 'w-20' : 'min-w-[80px]'
+        isCollapsed ? 'w-20' : 'min-w-[100px]'
       } border-r px-3 pb-10 pt-20 transition-all duration-300 min-h-screen`}
     >
       <div className="absolute right-[-20px] top-12">
@@ -48,35 +44,7 @@ export const SideBar = (): JSX.Element | null => {
         setIsCollapsed={setIsCollapsed}
         expandedDropdowns={expandedDropdowns}
         setExpandedDropdowns={setExpandedDropdowns}
-        Links={[
-          {
-            path: '/',
-            label: 'Dashboard',
-            icon: LayoutDashboard,
-            isDropdown: false
-          },
-          {
-            path: '/tables',
-            label: 'Tables',
-            icon: Table,
-            isDropdown: false
-          },
-          {
-            label: 'Menu',
-            icon: CookingPot,
-            isDropdown: true,
-            dropdown: [
-              { path: '/addmenu', label: 'Add Menu', icon: Dot },
-              { path: '/menus', label: 'Menus List', icon: Dot }
-            ]
-          },
-          {
-            path: '/profile',
-            label: 'Profile',
-            icon: CircleUser,
-            isDropdown: false
-          }
-        ]}
+        Links={sideBarLinks}
       />
     </div>
   )

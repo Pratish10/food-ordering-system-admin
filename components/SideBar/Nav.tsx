@@ -60,7 +60,7 @@ export const Nav = ({
   }
 
   return (
-    <nav>
+    <nav className="overflow-y-auto overflow-x-hidden h-full">
       {Links.map((link, index) => (
         <div key={link.path ?? link.label + index}>
           {link.isDropdown === true
