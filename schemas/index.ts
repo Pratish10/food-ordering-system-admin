@@ -42,11 +42,7 @@ export const AddMenuSchema = z.object({
   description: z.string().min(1, {
     message: 'Description is required'
   }),
-  type: z
-    .enum([MenuType.Vegeterian, MenuType.nonVegeterian])
-    .refine((value) => value !== '', {
-      message: 'Type of dish is required'
-    }),
+  type: z.enum([MenuType.Vegeterian, MenuType.nonVegeterian]),
   category: z.string().min(1, {
     message: 'Category is required'
   }),
