@@ -51,22 +51,6 @@ export const TableColumn: Array<ColumnDef<Table>> = [
     enableHiding: false
   },
   {
-    accessorKey: 'id',
-    header: ({ column }) => {
-      return (
-        <p
-          className="flex cursor-pointer text-orange-500 hover:underline md:text-sm text-xs"
-          onClick={() => {
-            column.toggleSorting(column.getIsSorted() === 'asc')
-          }}
-        >
-          Id
-          <ArrowUpDown className="ml-2 h-5 w-3" />
-        </p>
-      )
-    }
-  },
-  {
     accessorKey: 'tableNumber',
     header: ({ column }) => {
       return (
