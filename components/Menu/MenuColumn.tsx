@@ -1,6 +1,6 @@
 'use client'
 import { type ColumnDef } from '@tanstack/react-table'
-import { Carrot, Drumstick, ArrowUpDown, MoreHorizontal } from 'lucide-react'
+import { Carrot, Drumstick, MoreHorizontal } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { DialogBox } from '@/components/DialogBox'
@@ -24,6 +24,7 @@ import { type Menu } from '@prisma/client'
 import { deleteMenu } from '@/actions/menu/delete-menu'
 import { toast } from 'sonner'
 import Link from 'next/link'
+import { DataTableColumnHeader } from '../DataTables/data-table-column-header'
 
 export const MenuColumn: Array<ColumnDef<Menu>> = [
   {
@@ -39,7 +40,6 @@ export const MenuColumn: Array<ColumnDef<Menu>> = [
           table.toggleAllPageRowsSelected(!!value)
         }}
         aria-label="Select all"
-        className="hidden md:block"
       />
     ),
     cell: ({ row }) => (
@@ -50,7 +50,6 @@ export const MenuColumn: Array<ColumnDef<Menu>> = [
           row.toggleSelected(!!value)
         }}
         aria-label="Select row"
-        className="hidden md:block"
       />
     ),
     enableSorting: false,
@@ -77,15 +76,7 @@ export const MenuColumn: Array<ColumnDef<Menu>> = [
     accessorKey: 'Name',
     header: ({ column }) => {
       return (
-        <p
-          className="flex cursor-pointer text-orange-500 hover:underline md:text-sm text-xs"
-          onClick={() => {
-            column.toggleSorting(column.getIsSorted() === 'asc')
-          }}
-        >
-          Name
-          <ArrowUpDown className="ml-2 h-5 w-3" />
-        </p>
+        <DataTableColumnHeader column={column} title="Name" />
       )
     },
     cell: ({ row }) => {
@@ -130,17 +121,12 @@ export const MenuColumn: Array<ColumnDef<Menu>> = [
   },
   {
     accessorKey: 'category',
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
+    },
     header: ({ column }) => {
       return (
-        <p
-          className="flex cursor-pointer text-orange-500 hover:underline md:text-sm text-xs"
-          onClick={() => {
-            column.toggleSorting(column.getIsSorted() === 'asc')
-          }}
-        >
-          Category
-          <ArrowUpDown className="ml-2 h-5 w-3" />
-        </p>
+        <DataTableColumnHeader column={column} title="Category" />
       )
     }
   },
@@ -148,15 +134,7 @@ export const MenuColumn: Array<ColumnDef<Menu>> = [
     accessorKey: 'amount',
     header: ({ column }) => {
       return (
-        <p
-          className="flex cursor-pointer text-orange-500 hover:underline md:text-sm text-xs"
-          onClick={() => {
-            column.toggleSorting(column.getIsSorted() === 'asc')
-          }}
-        >
-          Amount
-          <ArrowUpDown className="ml-2 h-5 w-3" />
-        </p>
+        <DataTableColumnHeader column={column} title="Amount" />
       )
     },
     cell: ({ row }) => {
@@ -173,15 +151,7 @@ export const MenuColumn: Array<ColumnDef<Menu>> = [
     accessorKey: 'Last Modified',
     header: ({ column }) => {
       return (
-        <p
-          className="hidden lg:flex cursor-pointer text-orange-500 hover:underline md:text-sm text-xs"
-          onClick={() => {
-            column.toggleSorting(column.getIsSorted() === 'asc')
-          }}
-        >
-          Last Modified
-          <ArrowUpDown className="ml-2 h-5 w-3" />
-        </p>
+        <DataTableColumnHeader column={column} title="Last Modified" />
       )
     },
     cell: ({ row }) => {
@@ -199,7 +169,7 @@ export const MenuColumn: Array<ColumnDef<Menu>> = [
           }).format(new Date(updatedAt))
           : ''
 
-      return <div className="hidden md:block">{formattedDate}</div>
+      return <div className='md:text-sm text-xs'>{formattedDate}</div>
     }
   },
   {

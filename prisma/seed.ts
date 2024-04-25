@@ -2,7 +2,8 @@ import { db } from '../lib/db'
 import { MenuType, TableStatus } from '@prisma/client'
 
 async function main (): Promise<void> {
-  // userId is hardcoded
+  // userId is hardcoded you will have to login first then manually add the your userId from the
+  // sesssion then you will be able tun execute the seed command
   await db.category.createMany({
     data: [
       {
