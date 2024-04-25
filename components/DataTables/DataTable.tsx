@@ -174,7 +174,7 @@ function DataTable<TData, TValue, TModalContent extends JSX.Element> ({
           <DialogTrigger asChild>
             <Button variant="orange" size="sm" className="ml-auto h-8 flex">
               <Plus className="md:hidden flex" size={15} />
-              {window.innerWidth > 768 && buttonLabel && (
+              {typeof window !== 'undefined' && window.innerWidth > 768 && buttonLabel && (
                 <span>{buttonLabel}</span>
               )}
             </Button>
