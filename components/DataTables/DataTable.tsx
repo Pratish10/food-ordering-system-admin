@@ -45,7 +45,9 @@ interface DataTableProps<TData, TValue, TModalContent extends JSX.Element> {
   showModalButton?: boolean
   buttonLabel?: string
   modalContent?: TModalContent
-  deleteFunction?: (dataToDelete: string[]) => Promise<{ error?: string, success?: string }>
+  deleteFunction?: (
+    dataToDelete: string[]
+  ) => Promise<{ error?: string, success?: string }>
 }
 
 function DebouncedInput ({
@@ -301,33 +303,33 @@ function DataTable<TData, TValue, TModalContent extends JSX.Element> ({
           </TableBody>
         </Table>
         {showPagination && (
-          <div className="hidden lg:flex p-4 text-sm text-muted-foreground">
-            {table.getFilteredSelectedRowModel().rows.length} of{' '}
-            {table.getFilteredRowModel().rows.length} row(s) selected.
-          </div>
-        )}
-        {showPagination && (
-          <div className="flex items-center justify-end space-x-2 p-4">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                table.previousPage()
-              }}
-              disabled={!table.getCanPreviousPage()}
-            >
-              Previous
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                table.nextPage()
-              }}
-              disabled={!table.getCanNextPage()}
-            >
-              Next
-            </Button>
+          <div className="flex items-center justify-between px-2 py-3">
+            <div className="flex-1 text-sm text-muted-foreground">
+              {table.getFilteredSelectedRowModel().rows.length} of{' '}
+              {table.getFilteredRowModel().rows.length} row(s) selected.
+            </div>
+            <div className="flex items-center space-x-6">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  table.previousPage()
+                }}
+                disabled={!table.getCanPreviousPage()}
+              >
+                Previous
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  table.nextPage()
+                }}
+                disabled={!table.getCanNextPage()}
+              >
+                Next
+              </Button>
+            </div>
           </div>
         )}
       </div>
