@@ -24,25 +24,16 @@ import {
   TableRow
 } from '@/components/ui/table'
 import { Button } from '@/components/ui/button'
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu'
 import { Input } from '@/components/ui/input'
-import { Trash2, XCircle } from 'lucide-react'
+import { Plus, Trash2, XCircle } from 'lucide-react'
 import { DialogBox } from '../DialogBox'
 import { useDeleteMany } from '@/hooks/useDeleteMany'
+import { DataTablePagination } from './data-table-pagination'
+import { DataTableToolbar } from './data-table-toolbar'
 
 interface DataTableProps<TData, TValue, TModalContent extends JSX.Element> {
   columns: Array<ColumnDef<TData, TValue>>
   data: TData[]
-  loading?: boolean
-  globalSearch?: boolean
-  columnControl?: boolean
-  showPagination?: boolean
-  showModalButton?: boolean
   buttonLabel?: string
   modalContent?: TModalContent
   deleteFunction?: (
@@ -63,10 +54,10 @@ function DebouncedInput ({
 React.InputHTMLAttributes<HTMLInputElement>,
 'onChange'
 >): JSX.Element {
-  const [value, setValue] = useState(initialValue)
+  const [value, setValue] = useState(String(initialValue))
 
   useEffect(() => {
-    setValue(initialValue)
+    setValue(String(initialValue))
   }, [initialValue])
 
   useEffect(() => {
@@ -92,8 +83,8 @@ React.InputHTMLAttributes<HTMLInputElement>,
         onChange={(e) => {
           setValue(e.target.value)
         }}
-        placeholder="Search all columns..."
-        className="max-w-sm pr-10"
+        placeholder="Search..."
+        className="h-8 w-[140px] lg:w-[230px]"
       />
       {!!value && (
         <div className="absolute inset-y-0 right-0 pl-3 flex items-center mx-2 cursor-pointer">
@@ -107,11 +98,6 @@ React.InputHTMLAttributes<HTMLInputElement>,
 function DataTable<TData, TValue, TModalContent extends JSX.Element> ({
   columns,
   data,
-  loading,
-  globalSearch,
-  columnControl,
-  showPagination,
-  showModalButton,
   buttonLabel,
   modalContent,
   deleteFunction
@@ -177,77 +163,48 @@ function DataTable<TData, TValue, TModalContent extends JSX.Element> ({
         <Table />
       </div>
       <div className="flex items-center py-4">
-        {globalSearch && (
-          <DebouncedInput
-            value={globalFilter ?? ''}
-            onChange={(value) => {
-              setGlobalFilter(String(value))
-            }}
-            className="font-lg shadow border border-block"
-          />
-        )}
-        {columnControl && (
-          <div className=" flex ml-auto space-x-4">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="ml-auto" size="sm">
-                  Columns
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                {table
-                  .getAllColumns()
-                  .filter((column) => column.getCanHide())
-                  .map((column) => {
-                    return (
-                      <DropdownMenuCheckboxItem
-                        key={column.id}
-                        className="capitalize"
-                        checked={column.getIsVisible()}
-                        onCheckedChange={(value: any) => {
-                          column.toggleVisibility(!!value)
-                        }}
-                      >
-                        {column.id}
-                      </DropdownMenuCheckboxItem>
-                    )
-                  })}
-              </DropdownMenuContent>
-            </DropdownMenu>
-            {showModalButton && (
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button variant="orange" size="sm">
-                    {buttonLabel}
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="w-full">{modalContent}</DialogContent>
-              </Dialog>
-            )}
-            {table.getRowModel().rows.some((row) => row.getIsSelected()) && (
-              <React.Fragment>
-                <Button
-                  variant="destructive"
-                  size="icon"
-                  onClick={deleteHandler}
-                >
-                  <Trash2 size={20} />
-                </Button>
-                <DialogBox
-                  header="Delete"
-                  content={
-                    <React.Fragment>
-                      Are you sure you want to delete the Selected Data ?
-                    </React.Fragment>
-                  }
-                  show={showDialog}
-                  onClose={closeDialog}
-                  onAction={onDeleteHandler}
-                  onActionButtonLabel="Delete"
-                />
-              </React.Fragment>
-            )}
-          </div>
+        <DebouncedInput
+          value={globalFilter ?? ''}
+          onChange={(value) => {
+            setGlobalFilter(String(value))
+          }}
+        />
+        <DataTableToolbar table={table} />
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="orange" size="sm" className="ml-auto h-8 flex">
+              <Plus className="md:hidden flex" size={15} />
+              {window.innerWidth > 768 && buttonLabel && (
+                <span>{buttonLabel}</span>
+              )}
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="w-full">{modalContent}</DialogContent>
+        </Dialog>
+        {table.getRowModel().rows.some((row) => row.getIsSelected()) && (
+          <React.Fragment>
+            <Button
+              variant="destructive"
+              size="icon"
+              className="h-8"
+              onClick={deleteHandler}
+            >
+              <Trash2 size={20} />
+            </Button>
+            <DialogBox
+              header="Delete"
+              content={
+                <React.Fragment>
+                  Are you sure you want to delete {getSelectedData().length}{' '}
+                  records ?
+                </React.Fragment>
+              }
+              show={showDialog}
+              onClose={closeDialog}
+              onAction={onDeleteHandler}
+              onActionButtonLabel="Delete"
+            />
+          </React.Fragment>
         )}
       </div>
       <div className="rounded-md border">
@@ -302,36 +259,7 @@ function DataTable<TData, TValue, TModalContent extends JSX.Element> ({
                 )}
           </TableBody>
         </Table>
-        {showPagination && (
-          <div className="flex items-center justify-between px-2 py-3">
-            <div className="flex-1 text-sm text-muted-foreground">
-              {table.getFilteredSelectedRowModel().rows.length} of{' '}
-              {table.getFilteredRowModel().rows.length} row(s) selected.
-            </div>
-            <div className="flex items-center space-x-6">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  table.previousPage()
-                }}
-                disabled={!table.getCanPreviousPage()}
-              >
-                Previous
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  table.nextPage()
-                }}
-                disabled={!table.getCanNextPage()}
-              >
-                Next
-              </Button>
-            </div>
-          </div>
-        )}
+        <DataTablePagination table={table} />
       </div>
     </React.Fragment>
   )
