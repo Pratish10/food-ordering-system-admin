@@ -8,7 +8,7 @@ import { deleteTableMany } from '@/actions/Tables/delete-table'
 const TableList = async (): Promise<React.JSX.Element> => {
   const tables = await getTables()
   return (
-    <div>
+    <React.Fragment>
       <h1 className="text-2xl">Tables</h1>
       <DataTable
         columns={TableColumn}
@@ -21,7 +21,7 @@ const TableList = async (): Promise<React.JSX.Element> => {
         modalContent={<TableForm />}
         deleteFunction={deleteTableMany}
       />
-    </div>
+    </React.Fragment>
   )
 }
 

@@ -34,7 +34,6 @@ import { Input } from '@/components/ui/input'
 import { Trash2, XCircle } from 'lucide-react'
 import { DialogBox } from '../DialogBox'
 import { useDeleteMany } from '@/hooks/useDeleteMany'
-import { toast } from 'sonner'
 
 interface DataTableProps<TData, TValue, TModalContent extends JSX.Element> {
   columns: Array<ColumnDef<TData, TValue>>
@@ -122,7 +121,7 @@ function DataTable<TData, TValue, TModalContent extends JSX.Element> ({
   const [globalFilter, setGlobalFilter] = useState('')
   const [showDialog, setShowDialog] = useState(false)
   const [selectedData, setSelectedData] = useState([])
-  const [error, success, handleDelete] = useDeleteMany(selectedData, deleteFunction)
+  const [handleDelete] = useDeleteMany(selectedData, deleteFunction)
 
   const table = useReactTable({
     data,
@@ -162,12 +161,7 @@ function DataTable<TData, TValue, TModalContent extends JSX.Element> ({
 
   const onDeleteHandler = async (): Promise<void> => {
     await handleDelete()
-    if (error) {
-      toast.error(error)
-    }
-    if (success) {
-      toast.success(success)
-    }
+    table.setRowSelection({})
   }
 
   useEffect(() => {

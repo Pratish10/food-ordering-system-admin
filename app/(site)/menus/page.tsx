@@ -8,7 +8,7 @@ import { deleteMenuMany } from '@/actions/menu/delete-menu'
 const MenuList = async (): Promise<React.JSX.Element> => {
   const menus = await getMenus()
   return (
-    <div>
+    <React.Fragment>
       <h1 className="text-2xl">Menus</h1>
       <DataTable
         columns={MenuColumn}
@@ -21,7 +21,7 @@ const MenuList = async (): Promise<React.JSX.Element> => {
         modalContent={<CategoryForm />}
         deleteFunction={deleteMenuMany}
       />
-    </div>
+    </React.Fragment>
   )
 }
 
