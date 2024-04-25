@@ -8,6 +8,11 @@ const nextConfig = {
         pathname: "**",
       },
       {
+        protocol: "http",
+        hostname: 'dummyimage.com',
+        pathname: "**",
+      },
+      {
         protocol: "https",
         hostname: 'quickchart.io',
         pathname: "**",
