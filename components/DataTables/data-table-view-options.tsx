@@ -28,7 +28,7 @@ export function DataTableViewOptions<TData> ({
           className="ml-auto h-8 flex"
         >
           <SlidersHorizontal className="h-4 w-4" />
-          {window.innerWidth > 768 && (
+          {typeof window !== 'undefined' && window.innerWidth > 768 && (
                 <span>View</span>
           )}
         </Button>
