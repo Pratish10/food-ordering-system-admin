@@ -1,31 +1,28 @@
-import { useState } from 'react'
+import { toast } from 'sonner'
 
 export const useDeleteMany = (
   dataToDelete: string[],
   funcToDelete?: (
     dataToDelete: string[]
   ) => Promise<{ error?: string, success?: string }>
-): [string | null, string | null, () => Promise<void>] => {
-  const [error, setError] = useState<string | null>(null)
-  const [success, setSuccess] = useState<string | null>(null)
-
+): Array<() => Promise<void>> => {
   const handleDelete = async (): Promise<void> => {
     if (funcToDelete != null) {
       try {
         const data = await funcToDelete(dataToDelete)
         if (data?.error != null) {
-          setError(data.error)
+          toast.error(data?.error)
         }
         if (data?.success != null) {
-          setSuccess(data.success)
+          toast.success(data?.success)
         }
       } catch (err) {
-        setError('Something went wrong')
+        toast.error('Something went wrong')
       }
     } else {
-      setError('Internal Server Error')
+      toast.error('Internal Server Error')
     }
   }
 
-  return [error, success, handleDelete]
+  return [handleDelete]
 }
