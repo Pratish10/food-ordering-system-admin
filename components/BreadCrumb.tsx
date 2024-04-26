@@ -10,6 +10,8 @@ import {
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb'
 import React from 'react'
+import { Button } from './ui/button'
+import { ChevronLeft } from 'lucide-react'
 
 export const BreadCrumbs = (): JSX.Element => {
   const router = useRouter()
@@ -18,7 +20,18 @@ export const BreadCrumbs = (): JSX.Element => {
   const crumb = pathname.split('/').filter(Boolean)
 
   return (
-    <div className="flex items-center text-sm my-1 mb-5 px-5 pt-5">
+    <div className="flex items-center text-sm my-1 mb-5 px-5 pt-5 space-x-4">
+      {pathname !== '/' && <Button
+        variant="outline"
+        size="icon"
+        className="h-7 w-7"
+        onClick={() => {
+          router.back()
+        }}
+      >
+        <ChevronLeft className="h-4 w-4" />
+        <span className="sr-only">Back</span>
+      </Button> }
       <Breadcrumb>
         <BreadcrumbList>
           {pathname.startsWith('/') && (
