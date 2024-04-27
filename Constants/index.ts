@@ -7,7 +7,7 @@ import {
 } from 'lucide-react'
 
 export const sideBarLinks = [
-  { path: '/', label: 'Dashboard', icon: LayoutDashboard, isDropdown: false },
+  { path: '/', label: 'Home', icon: LayoutDashboard, isDropdown: false },
   { path: '/tables', label: 'Tables', icon: Table, isDropdown: false },
   {
     label: 'Menu',

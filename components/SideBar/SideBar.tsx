@@ -9,7 +9,7 @@ import {
 } from 'lucide-react'
 
 import { Nav } from '@/components/SideBar/Nav'
-import { sideBarLinks } from '@/Data/sideBarLinks'
+import { sideBarLinks } from '@/Constants/index'
 
 export const SideBar = (): JSX.Element | null => {
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false)

@@ -16,7 +16,7 @@ export async function GET (
 
     return new NextResponse(JSON.stringify(menu), { status: 200 })
   } catch (error) {
-    console.error('DELETE_MENU ERROR:', error)
+    console.error('GET_MENU ERROR:', error)
     return new NextResponse('Internal Server Error', { status: 500 })
   }
 }

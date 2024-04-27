@@ -18,7 +18,7 @@ import { Nav } from './SideBar/Nav'
 import { useState } from 'react'
 import { UserButton } from './auth/UserButton'
 import { useCurrentUser } from '@/hooks/useCurrentUser'
-import { sideBarLinks } from '@/Data/sideBarLinks'
+import { sideBarLinks } from '@/Constants/index'
 
 export const Header = (): JSX.Element => {
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false)

@@ -29,6 +29,9 @@ export async function GET (req: NextRequest): Promise<NextResponse> {
           updatedAt: 'desc'
         }
       })
+      if (menus.length === 0) {
+        throw new Error('Invalid Category passed')
+      }
     } else {
       menus = await db.menu.findMany({
         select: {
@@ -57,6 +60,6 @@ export async function GET (req: NextRequest): Promise<NextResponse> {
     return new NextResponse(JSON.stringify(response), { status: 200 })
   } catch (error) {
     console.error('GET_MENUS_ERROR:', error)
-    return new NextResponse('Internal Server Error', { status: 500 })
+    return new NextResponse(error as string, { status: 500 })
   }
 }
