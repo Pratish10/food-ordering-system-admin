@@ -17,7 +17,7 @@ export const addTable = async (
     return { error: 'Invalid Fields!' }
   }
 
-  const { tableNumber, tableSize, tableStatus, userId } = validatedFields.data
+  const { tableNumber, tableSize, tableStatus, userId, tableQrCode } = validatedFields.data
 
   const existingTable = await getTableByTableNumber(tableNumber)
 
@@ -31,7 +31,8 @@ export const addTable = async (
         tableNumber,
         tableSize,
         tableStatus,
-        userId
+        userId,
+        tableQrCode
       }
     })
 
