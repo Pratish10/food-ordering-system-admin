@@ -12,7 +12,8 @@
     "lint": "eslint --cache \"**/*.{js,jsx,ts,tsx}\" --ignore-path .eslintignore",
     "lint:fix": "eslint --cache --fix \"**/*.{js,jsx,ts,tsx}\" --ignore-path .eslintignore",
     "db:seed": "prisma db seed",
-    "prepare": "husky"
+    "prepare": "husky",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^1.5.0",
