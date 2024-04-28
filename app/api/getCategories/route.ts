@@ -4,9 +4,6 @@ import { NextResponse } from 'next/server'
 export async function GET (): Promise<NextResponse<unknown>> {
   try {
     const categories = await db.category.findMany({
-      select: {
-        category: true
-      },
       orderBy: {
         updatedAt: 'desc'
       }
