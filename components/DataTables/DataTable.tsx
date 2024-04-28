@@ -30,6 +30,7 @@ import { DialogBox } from '../DialogBox'
 import { useDeleteMany } from '@/hooks/useDeleteMany'
 import { DataTablePagination } from './data-table-pagination'
 import { DataTableToolbar } from './data-table-toolbar'
+import { useMediaQuery } from 'usehooks-ts'
 
 interface DataTableProps<TData, TValue, TModalContent extends JSX.Element> {
   columns: Array<ColumnDef<TData, TValue>>
@@ -110,6 +111,7 @@ function DataTable<TData, TValue, TModalContent extends JSX.Element> ({
   const [showDialog, setShowDialog] = useState(false)
   const [selectedData, setSelectedData] = useState([])
   const [handleDelete] = useDeleteMany(selectedData, deleteFunction)
+  const isDesktop = useMediaQuery('(min-width: 768px)')
 
   const table = useReactTable({
     data,
@@ -173,10 +175,7 @@ function DataTable<TData, TValue, TModalContent extends JSX.Element> ({
         <Dialog>
           <DialogTrigger asChild>
             <Button variant="orange" size="sm" className="ml-auto h-8 flex">
-              <Plus className="md:hidden flex" size={15} />
-              {typeof window !== 'undefined' && window.innerWidth > 768 && buttonLabel && (
-                <span>{buttonLabel}</span>
-              )}
+              {isDesktop ? <span>{buttonLabel}</span> : <Plus className="md:hidden flex" size={15} />}
             </Button>
           </DialogTrigger>
           <DialogContent className="w-full">{modalContent}</DialogContent>

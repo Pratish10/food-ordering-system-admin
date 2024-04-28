@@ -18,6 +18,7 @@ import {
   PopoverTrigger
 } from '@/components/ui/popover'
 import { Separator } from '@/components/ui/separator'
+import { useMediaQuery } from 'usehooks-ts'
 
 interface DataTableFacetedFilterProps<TData, TValue> {
   column?: Column<TData, TValue>
@@ -36,15 +37,13 @@ export function DataTableFacetedFilter<TData, TValue> ({
 }: DataTableFacetedFilterProps<TData, TValue>): React.JSX.Element {
   const facets = column?.getFacetedUniqueValues()
   const selectedValues = new Set(column?.getFilterValue() as string[])
+  const isDesktop = useMediaQuery('(min-width: 768px)')
 
   return (
     <Popover>
       <PopoverTrigger asChild>
         <Button variant="outline" size="sm" className="h-8">
-          <ListFilter className="h-4 w-4" />
-          {typeof window !== 'undefined' && window.innerWidth > 768 && (title != null) && (
-                <span>{title}</span>
-          )}
+          {isDesktop ? <span>{title}</span> : <ListFilter className="h-4 w-4" />}
           {selectedValues?.size > 0 && (
             <React.Fragment>
               <Separator orientation="vertical" className="mx-2 h-4" />

@@ -560,175 +560,175 @@ async function main (): Promise<void> {
       {
         tableNumber: 'T001',
         tableStatus: TableStatus.Vacant,
-        tableQrCode: 'https://quickchart.io/qr?text=http://localhost:3000/tables&size=350',
+        tableQrCode: 'https://quickchart.io/qr?text=https://food-ordering-system-admin.vercel.app&size=350',
         tableSize: '9',
         userId: 'clv3odel70000egmuu45avxsb'
       },
       {
         tableNumber: 'T002',
         tableStatus: TableStatus.Vacant,
-        tableQrCode: 'https://quickchart.io/qr?text=http://localhost:3000/tables&size=350',
+        tableQrCode: 'https://quickchart.io/qr?text=https://food-ordering-system-admin.vercel.app&size=350',
         tableSize: '4',
         userId: 'clv3odel70000egmuu45avxsb'
       },
       {
         tableNumber: 'T003',
         tableStatus: TableStatus.Vacant,
-        tableQrCode: 'https://quickchart.io/qr?text=http://localhost:3000/tables&size=350',
+        tableQrCode: 'https://quickchart.io/qr?text=https://food-ordering-system-admin.vercel.app&size=350',
         tableSize: '9',
         userId: 'clv3odel70000egmuu45avxsb'
       },
       {
         tableNumber: 'T004',
         tableStatus: TableStatus.Vacant,
-        tableQrCode: 'https://quickchart.io/qr?text=http://localhost:3000/tables&size=350',
+        tableQrCode: 'https://quickchart.io/qr?text=https://food-ordering-system-admin.vercel.app&size=350',
         tableSize: '1',
         userId: 'clv3odel70000egmuu45avxsb'
       },
       {
         tableNumber: 'T005',
         tableStatus: TableStatus.Vacant,
-        tableQrCode: 'https://quickchart.io/qr?text=http://localhost:3000/tables&size=350',
+        tableQrCode: 'https://quickchart.io/qr?text=https://food-ordering-system-admin.vercel.app&size=350',
         tableSize: '10',
         userId: 'clv3odel70000egmuu45avxsb'
       },
       {
         tableNumber: 'T006',
         tableStatus: TableStatus.Vacant,
-        tableQrCode: 'https://quickchart.io/qr?text=http://localhost:3000/tables&size=350',
+        tableQrCode: 'https://quickchart.io/qr?text=https://food-ordering-system-admin.vercel.app&size=350',
         tableSize: '4',
         userId: 'clv3odel70000egmuu45avxsb'
       },
       {
         tableNumber: 'T007',
         tableStatus: TableStatus.Vacant,
-        tableQrCode: 'https://quickchart.io/qr?text=http://localhost:3000/tables&size=350',
+        tableQrCode: 'https://quickchart.io/qr?text=https://food-ordering-system-admin.vercel.app&size=350',
         tableSize: '7',
         userId: 'clv3odel70000egmuu45avxsb'
       },
       {
         tableNumber: 'T008',
         tableStatus: TableStatus.Vacant,
-        tableQrCode: 'https://quickchart.io/qr?text=http://localhost:3000/tables&size=350',
+        tableQrCode: 'https://quickchart.io/qr?text=https://food-ordering-system-admin.vercel.app&size=350',
         tableSize: '11',
         userId: 'clv3odel70000egmuu45avxsb'
       },
       {
         tableNumber: 'T009',
         tableStatus: TableStatus.Vacant,
-        tableQrCode: 'https://quickchart.io/qr?text=http://localhost:3000/tables&size=350',
+        tableQrCode: 'https://quickchart.io/qr?text=https://food-ordering-system-admin.vercel.app&size=350',
         tableSize: '1',
         userId: 'clv3odel70000egmuu45avxsb'
       },
       {
         tableNumber: 'T010',
         tableStatus: TableStatus.Vacant,
-        tableQrCode: 'https://quickchart.io/qr?text=http://localhost:3000/tables&size=350',
+        tableQrCode: 'https://quickchart.io/qr?text=https://food-ordering-system-admin.vercel.app&size=350',
         tableSize: '11',
         userId: 'clv3odel70000egmuu45avxsb'
       },
       {
         tableNumber: 'T011',
         tableStatus: TableStatus.Vacant,
-        tableQrCode: 'https://quickchart.io/qr?text=http://localhost:3000/tables&size=350',
+        tableQrCode: 'https://quickchart.io/qr?text=https://food-ordering-system-admin.vercel.app&size=350',
         tableSize: '8',
         userId: 'clv3odel70000egmuu45avxsb'
       },
       {
         tableNumber: 'T012',
         tableStatus: TableStatus.Vacant,
-        tableQrCode: 'https://quickchart.io/qr?text=http://localhost:3000/tables&size=350',
+        tableQrCode: 'https://quickchart.io/qr?text=https://food-ordering-system-admin.vercel.app&size=350',
         tableSize: '6',
         userId: 'clv3odel70000egmuu45avxsb'
       },
       {
         tableNumber: 'T013',
         tableStatus: TableStatus.Vacant,
-        tableQrCode: 'https://quickchart.io/qr?text=http://localhost:3000/tables&size=350',
+        tableQrCode: 'https://quickchart.io/qr?text=https://food-ordering-system-admin.vercel.app&size=350',
         tableSize: '2',
         userId: 'clv3odel70000egmuu45avxsb'
       },
       {
         tableNumber: 'T014',
         tableStatus: TableStatus.Vacant,
-        tableQrCode: 'https://quickchart.io/qr?text=http://localhost:3000/tables&size=350',
+        tableQrCode: 'https://quickchart.io/qr?text=https://food-ordering-system-admin.vercel.app&size=350',
         tableSize: '9',
         userId: 'clv3odel70000egmuu45avxsb'
       },
       {
         tableNumber: 'T015',
         tableStatus: TableStatus.Vacant,
-        tableQrCode: 'https://quickchart.io/qr?text=http://localhost:3000/tables&size=350',
+        tableQrCode: 'https://quickchart.io/qr?text=https://food-ordering-system-admin.vercel.app&size=350',
         tableSize: '4',
         userId: 'clv3odel70000egmuu45avxsb'
       },
       {
         tableNumber: 'T016',
         tableStatus: TableStatus.Vacant,
-        tableQrCode: 'https://quickchart.io/qr?text=http://localhost:3000/tables&size=350',
+        tableQrCode: 'https://quickchart.io/qr?text=https://food-ordering-system-admin.vercel.app&size=350',
         tableSize: '5',
         userId: 'clv3odel70000egmuu45avxsb'
       },
       {
         tableNumber: 'T017',
         tableStatus: TableStatus.Vacant,
-        tableQrCode: 'https://quickchart.io/qr?text=http://localhost:3000/tables&size=350',
+        tableQrCode: 'https://quickchart.io/qr?text=https://food-ordering-system-admin.vercel.app&size=350',
         tableSize: '2',
         userId: 'clv3odel70000egmuu45avxsb'
       },
       {
         tableNumber: 'T018',
         tableStatus: TableStatus.Vacant,
-        tableQrCode: 'https://quickchart.io/qr?text=http://localhost:3000/tables&size=350',
+        tableQrCode: 'https://quickchart.io/qr?text=https://food-ordering-system-admin.vercel.app&size=350',
         tableSize: '11',
         userId: 'clv3odel70000egmuu45avxsb'
       },
       {
         tableNumber: 'T019',
         tableStatus: TableStatus.Vacant,
-        tableQrCode: 'https://quickchart.io/qr?text=http://localhost:3000/tables&size=350',
+        tableQrCode: 'https://quickchart.io/qr?text=https://food-ordering-system-admin.vercel.app&size=350',
         tableSize: '1',
         userId: 'clv3odel70000egmuu45avxsb'
       },
       {
         tableNumber: 'T020',
         tableStatus: TableStatus.Vacant,
-        tableQrCode: 'https://quickchart.io/qr?text=http://localhost:3000/tables&size=350',
+        tableQrCode: 'https://quickchart.io/qr?text=https://food-ordering-system-admin.vercel.app&size=350',
         tableSize: '5',
         userId: 'clv3odel70000egmuu45avxsb'
       },
       {
         tableNumber: 'T021',
         tableStatus: TableStatus.Vacant,
-        tableQrCode: 'https://quickchart.io/qr?text=http://localhost:3000/tables&size=350',
+        tableQrCode: 'https://quickchart.io/qr?text=https://food-ordering-system-admin.vercel.app&size=350',
         tableSize: '10',
         userId: 'clv3odel70000egmuu45avxsb'
       },
       {
         tableNumber: 'T022',
         tableStatus: TableStatus.Vacant,
-        tableQrCode: 'https://quickchart.io/qr?text=http://localhost:3000/tables&size=350',
+        tableQrCode: 'https://quickchart.io/qr?text=https://food-ordering-system-admin.vercel.app&size=350',
         tableSize: '9',
         userId: 'clv3odel70000egmuu45avxsb'
       },
       {
         tableNumber: 'T023',
         tableStatus: TableStatus.Vacant,
-        tableQrCode: 'https://quickchart.io/qr?text=http://localhost:3000/tables&size=350',
+        tableQrCode: 'https://quickchart.io/qr?text=https://food-ordering-system-admin.vercel.app&size=350',
         tableSize: '7',
         userId: 'clv3odel70000egmuu45avxsb'
       },
       {
         tableNumber: 'T024',
         tableStatus: TableStatus.Vacant,
-        tableQrCode: 'https://quickchart.io/qr?text=http://localhost:3000/tables&size=350',
+        tableQrCode: 'https://quickchart.io/qr?text=https://food-ordering-system-admin.vercel.app&size=350',
         tableSize: '7',
         userId: 'clv3odel70000egmuu45avxsb'
       },
       {
         tableNumber: 'T025',
         tableStatus: TableStatus.Vacant,
-        tableQrCode: 'https://quickchart.io/qr?text=http://localhost:3000/tables&size=350',
+        tableQrCode: 'https://quickchart.io/qr?text=https://food-ordering-system-admin.vercel.app&size=350',
         tableSize: '10',
         userId: 'clv3odel70000egmuu45avxsb'
       }

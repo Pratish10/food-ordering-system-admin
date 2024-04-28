@@ -8,7 +8,7 @@ import {
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
-const domain = process.env.ADMIN_PUBLIC_URL
+const domain = 'https://food-ordering-system-admin.vercel.app'
 
 export const sendVerificationEmail = async (
   email: string,
