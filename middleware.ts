@@ -20,13 +20,13 @@ export default auth((req) => {
   const isPublicRoutes = publicRoutes.includes(nextUrl.pathname)
   const isAuthRoute = authRoutes.includes(nextUrl.pathname)
 
-  if (isApiRoutePrefix) return null
+  if (isApiRoutePrefix) return
 
   if (isAuthRoute) {
     if (isLoggedIn) {
       return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl))
     }
-    return null
+    return
   }
 
   if (!isLoggedIn && !isPublicRoutes) {
