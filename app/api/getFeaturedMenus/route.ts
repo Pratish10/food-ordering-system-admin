@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET (): Promise<NextResponse> {
   try {
     const featuredMenus = await db.menu.findMany({
