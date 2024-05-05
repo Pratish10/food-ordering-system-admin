@@ -27,7 +27,11 @@ export async function GET (): Promise<NextResponse> {
       responseData: featuredMenus
     }
 
-    return new NextResponse(JSON.stringify(response), { status: 200 })
+    const headers = {
+      'Cache-Control': 'no-store'
+    }
+
+    return new NextResponse(JSON.stringify(response), { status: 200, headers })
   } catch (error) {
     console.error('GET_MENUS_ERROR:', error)
     return new NextResponse('Internal Server Error', { status: 500 })
