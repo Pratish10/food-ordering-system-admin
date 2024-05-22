@@ -1,6 +1,8 @@
 import { db } from '@/lib/db'
 import { NextResponse } from 'next/server'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET (): Promise<NextResponse<unknown>> {
   try {
     const categories = await db.category.findMany({

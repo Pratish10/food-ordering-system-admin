@@ -1,6 +1,8 @@
 import { type NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET (req: NextRequest): Promise<NextResponse> {
   try {
     const searchParams = req.nextUrl.searchParams
@@ -57,7 +59,11 @@ export async function GET (req: NextRequest): Promise<NextResponse> {
       responseData: menus
     }
 
-    return new NextResponse(JSON.stringify(response), { status: 200 })
+    const headers = {
+      'Cache-Control': 'no-store'
+    }
+
+    return new NextResponse(JSON.stringify(response), { status: 200, headers })
   } catch (error) {
     console.error('GET_MENUS_ERROR:', error)
     return new NextResponse(error as string, { status: 500 })
