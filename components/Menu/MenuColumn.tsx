@@ -1,7 +1,7 @@
 'use client'
 import { type ColumnDef } from '@tanstack/react-table'
 import { Carrot, Drumstick, MoreHorizontal } from 'lucide-react'
-
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { DialogBox } from '@/components/DialogBox'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -127,6 +127,27 @@ export const MenuColumn: Array<ColumnDef<Menu>> = [
     header: ({ column }) => {
       return (
         <DataTableColumnHeader column={column} title="Category" />
+      )
+    }
+  },
+  {
+    accessorKey: 'availability',
+    header: ({ column }) => {
+      return (
+        <DataTableColumnHeader column={column} title="Availability" />
+      )
+    },
+    cell: ({ row }) => {
+      const Availability = row.original.availability
+      return (
+        <Badge
+          variant="outline"
+          className={`rounded-full text-xs ${
+            Availability === 'Available' ? 'bg-green-400' : 'bg-red-400'
+          }`}
+        >
+          {Availability}
+        </Badge>
       )
     }
   },

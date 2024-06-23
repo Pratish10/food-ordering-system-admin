@@ -26,7 +26,8 @@ export const addMenu = async (
     type,
     image,
     isFeatured,
-    userId
+    userId,
+    availability
   } = validatedFields.data
 
   const existingMenu = await getMenuByName(name)
@@ -45,7 +46,8 @@ export const addMenu = async (
         image,
         isFeatured,
         type,
-        userId
+        userId,
+        availability
       }
     })
 

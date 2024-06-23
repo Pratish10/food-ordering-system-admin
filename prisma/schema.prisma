@@ -44,8 +44,8 @@ model User {
   isTwoFactorEnabled    Boolean                @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
 
-  menus  Menu[]
-  tables Table[]
+  menus    Menu[]
+  tables   Table[]
   category Category[]
 }
 
@@ -90,21 +90,27 @@ enum MenuType {
   nonVegeterian
 }
 
+enum Availability {
+  Available
+  notAvailable
+}
+
 model Menu {
-  id          String   @id @default(cuid())
-  name        String   @unique
-  description String
-  type        MenuType
-  image       String
-  category    String
-  amount      String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  isFeatured  Boolean? @default(false)
+  id           String       @id @default(cuid())
+  name         String       @unique
+  description  String
+  type         MenuType
+  image        String
+  category     String
+  amount       String
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  isFeatured   Boolean?     @default(false)
+  availability Availability
 
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
+  userId    String
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  OrderItem OrderItem[]
 
   @@unique([userId, name])
 }
@@ -137,4 +143,21 @@ model Category {
 
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Order {
+  id          String      @id @default(uuid())
+  orderNumber String
+  orderDate   DateTime    @default(now())
+  tableNumber String?
+  items       OrderItem[]
+}
+
+model OrderItem {
+  id       String @id @default(uuid())
+  orderId  String
+  menuId   String
+  quantity Int
+  order    Order  @relation(fields: [orderId], references: [id])
+  menuItem Menu   @relation(fields: [menuId], references: [id])
 }

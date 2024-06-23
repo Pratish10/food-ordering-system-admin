@@ -43,7 +43,7 @@ import {
 } from '@/components/ui/command'
 import { Textarea } from '@/components/ui/textarea'
 import { Input } from '@/components/ui/input'
-import { type Category, type Menu, MenuType } from '@prisma/client'
+import { Availability, type Category, type Menu, MenuType } from '@prisma/client'
 import ClipLoader from 'react-spinners/ClipLoader'
 import { FileUpload } from '../FileUpload'
 import { Switch } from '@/components/ui/switch'
@@ -85,6 +85,7 @@ export const MenuForm = ({
           category: menu.category || undefined,
           description: menu.description || undefined,
           type: menu.type || undefined,
+          availability: menu.availability || undefined,
           image: menu.image || undefined,
           isFeatured: menu.isFeatured ?? false,
           userId: user?.id,
@@ -98,6 +99,7 @@ export const MenuForm = ({
           category: '',
           description: '',
           type: MenuType.Vegeterian,
+          availability: Availability.Available,
           image: '',
           isFeatured: false,
           userId: user?.id
@@ -288,6 +290,37 @@ export const MenuForm = ({
                     </Select>
                   </FormControl>
                   <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="availability"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Availability</FormLabel>
+                  <FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      disabled={isPending}
+                      {...field}
+                    >
+                      <SelectTrigger className="w-[180px]">
+                        <SelectValue placeholder="Select Availability" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectItem value={Availability.Available}>
+                            Available
+                          </SelectItem>
+                          <SelectItem value={Availability.notAvailable}>
+                            Not Available
+                          </SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormDescription>Set the Availability of the dish</FormDescription>
                 </FormItem>
               )}
             />
