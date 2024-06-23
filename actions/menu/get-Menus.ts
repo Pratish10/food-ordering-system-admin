@@ -16,6 +16,7 @@ Array<{
   updatedAt: Date
   isFeatured: boolean | null
   userId: string
+  availability: $Enums.Availability
 }>
 > => {
   try {
