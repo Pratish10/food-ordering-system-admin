@@ -149,7 +149,8 @@ model Order {
   id          String      @id @default(uuid())
   orderNumber String
   orderDate   DateTime    @default(now())
-  tableNumber String?
+  updatedAt   DateTime    @updatedAt
+  tableNumber String
   items       OrderItem[]
 }
 
