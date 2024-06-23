@@ -36,13 +36,19 @@ export const TableForm = (): JSX.Element => {
       tableSize: '',
       tableStatus: TableStatus.Vacant,
       userId: user?.id,
-      tableQrCode: 'https://quickchart.io/qr?text=http://localhost:3000/tables&size=350'
+      tableQrCode: 'https://quickchart.io/qr?text=https://food-ordering-system-client.vercel.app?tableNumber=&size=350'
     }
   })
 
   const submitHandler = (values: z.infer<typeof AddTableSchema>): void => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { tableNumber, ...restValues } = values
+
+    // Construct QR code URL with tableNumber dynamically
+    const tableQrCode = `https://quickchart.io/qr?text=https://food-ordering-system-client.vercel.app?tableNumber=${tableNumber}&size=350`
+
     startTransition(() => {
-      void addTable(values).then((data) => {
+      void addTable({ ...restValues, tableQrCode, tableNumber }).then((data) => {
         if (data?.success != null) {
           toast.success(data?.success)
           close()

@@ -1,4 +1,4 @@
-import { MenuType, TableStatus } from '@prisma/client'
+import { Availability, MenuType, TableStatus } from '@prisma/client'
 import * as z from 'zod'
 
 export const RegisterSchema = z.object({
@@ -43,6 +43,7 @@ export const AddMenuSchema = z.object({
     message: 'Description is required'
   }),
   type: z.enum([MenuType.Vegeterian, MenuType.nonVegeterian]),
+  availability: z.enum([Availability.Available, Availability.notAvailable]),
   category: z.string().min(1, {
     message: 'Category is required'
   }),

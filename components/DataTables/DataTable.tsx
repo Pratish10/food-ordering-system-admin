@@ -191,7 +191,7 @@ function DataTable<TData, TValue, TModalContent extends JSX.Element> ({
               <Trash2 size={20} />
             </Button>
             <DialogBox
-              header="Delete"
+              header="Delete Bulk"
               content={
                 <React.Fragment>
                   Are you sure you want to delete {getSelectedData().length}{' '}
