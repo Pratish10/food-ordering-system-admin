@@ -1,7 +1,12 @@
 import React from 'react'
 
-const page = (): React.JSX.Element => {
-  return <div>page</div>
+const OrdersList = async (): Promise<React.JSX.Element> => {
+  return (
+    <React.Fragment>
+      <h1 className="text-2xl font-bold">Orders</h1>
+      <p className='text-gray-500'>Manage your Orders</p>
+    </React.Fragment>
+  )
 }
 
-export default page
+export default OrdersList

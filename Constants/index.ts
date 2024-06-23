@@ -3,7 +3,8 @@ import {
   CookingPot,
   Dot,
   CircleUser,
-  Table
+  Table,
+  BookA
 } from 'lucide-react'
 
 export const sideBarLinks = [
@@ -18,5 +19,6 @@ export const sideBarLinks = [
       { path: '/menus', label: 'Menus List', icon: Dot }
     ]
   },
+  { path: '/orders', label: 'Orders', icon: BookA, isDropdown: false },
   { path: '/profile', label: 'Profile', icon: CircleUser, isDropdown: false }
 ]
